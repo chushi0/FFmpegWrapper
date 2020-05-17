@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 3.4.1)
+project(FFMpegWrapper)
+
+add_definitions(-D FFMPEGWRAPPER_BUILD)
+set(BUILD_SHARED_LIBS ON)
+
+include_directories(${FFMPEG_INCLUDE_DIR})
+link_directories(${FFMPEG_LIBRARY_DIR})
+find_library(avcodec avcodec PATHS ${FFMPEG_LIBRARY_DIR})
+find_library(avdevice avdevice PATHS ${FFMPEG_LIBRARY_DIR})
+find_library(avfilter avfilter PATHS ${FFMPEG_LIBRARY_DIR})
+find_library(avformat avformat PATHS ${FFMPEG_LIBRARY_DIR})
+find_library(avutil avutil PATHS ${FFMPEG_LIBRARY_DIR})
+find_library(postproc postproc PATHS ${FFMPEG_LIBRARY_DIR})
+find_library(swresample swresample PATHS ${FFMPEG_LIBRARY_DIR})
+find_library(swscale swscale PATHS ${FFMPEG_LIBRARY_DIR})
+
+aux_source_directory(. SRC_LIST)
+add_library(ffmpegwrapper ${SRC_LIST})
+target_link_libraries(ffmpegwrapper avcodec avdevice avfilter avformat avutil postproc swresample swscale)
